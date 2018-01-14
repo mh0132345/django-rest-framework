@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block javascript %}
+  <script src="{% static 'choice.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+  <h1 class="page-header">Answer for question</h1>
+  {% if perms.quickstart.add_question %}
+  <p>
+    <button type="button" class="btn btn-primary js-create-choice" data-url="{% url 'choice_create' %}">
+      <span class="glyphicon glyphicon-plus"></span>
+      New answer
+    </button>
+  </p>
+  {% endif %}
+  <table class="table" id="choice-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Question</th>
+        <th>Choice</th> 
+        <th>Votes</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% include 'includes/partial_choice_list.html' %}
+    </tbody>
+  </table>
+  <div class="modal fade" id="modal-choice">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+      </div>
+    </div>
+  </div>
+{% endblock %}

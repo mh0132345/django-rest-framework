@@ -1,0 +1,25 @@
+{% for question in question_list %}
+<tr>
+  <td>{{question.id}}</td>
+  <td>{{ question.question_text}}</td>
+  <td>{{ question.tag }}</td>
+	<td>
+  {% if perms.quickstart.change_question %}
+	  <button type="button"
+	          class="btn btn-warning btn-sm js-update-question"
+	          data-url="{% url 'question_update' question.pk %}">
+	    <span class="glyphicon glyphicon-pencil"></span> Edit
+	  </button>
+	  <button type="button"
+              class="btn btn-danger btn-sm js-delete-question"
+              data-url="{% url 'question_delete' question.id %}">
+        <span class="glyphicon glyphicon-trash"></span> Delete
+      </button>
+	</td>
+  {% endif %}
+</tr>
+{% empty %}
+<tr>
+  <td colspan="7" class="text-center bg-warning">No question</td>
+</tr>
+{% endfor %}

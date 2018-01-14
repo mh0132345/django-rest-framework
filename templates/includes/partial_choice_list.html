@@ -1,0 +1,26 @@
+{% for choice in choice_list %}
+<tr>
+  <td>{{ choice.id}}</td>
+  <td>{{ choice.question}}
+  <td>{{ choice.choice_text}}</td>
+  <td>{{ choice.votes }}</td>
+  {% if perms.quickstart.change_question %}
+	<td>
+	  <button type="button"
+	          class="btn btn-warning btn-sm js-update-choice"
+	          data-url="{% url 'choice_update' choice.pk %}">
+	    <span class="glyphicon glyphicon-pencil"></span> Edit
+	  </button>
+	  <button type="button"
+              class="btn btn-danger btn-sm js-delete-choice"
+              data-url="{% url 'choice_delete' choice.id %}">
+        <span class="glyphicon glyphicon-trash"></span> Delete
+      </button>
+	</td>
+  {% endif %}
+</tr>
+{% empty %}
+<tr>
+  <td colspan="7" class="text-center bg-warning">No answer</td>
+</tr>
+{% endfor %}

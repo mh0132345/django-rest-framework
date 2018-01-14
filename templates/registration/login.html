@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+{% if next %}
+    {% if user.is_authenticated %}
+    <p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+    {% else %}
+    <p>Please login to see this page.</p>
+    {% endif %}
+{% endif %}
+  <h2>Login</h2>
+
+  <form method="post">
+  	<div class= "form-group">
+	    {% csrf_token %}
+	    {{ form.as_p }}
+	</div>
+    <button type="submit" class="btn btn-primary">Login</button>
+  </form>
+{% endblock %}

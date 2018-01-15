@@ -1,11 +1,8 @@
-from django.contrib.auth.models import User, Group
 from .models import Question, Choice
 from django.shortcuts import render, get_object_or_404
 from .form import QuestionForm, ChoiceForm
 from django.http import JsonResponse
 from django.template.loader import render_to_string
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import DjangoModelPermissions
 
 def question_list(request):
     question = Question.objects.all()
@@ -29,10 +26,7 @@ def save_question_form(request, form, template_name):
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
 
-@api_view(['PUT'])
-@permission_classes((DjangoModelPermissions, ))
 def question_create(request):
-    queryset = User.objects.none()
     if request.method == 'POST':
         form = QuestionForm(request.POST)
     else:

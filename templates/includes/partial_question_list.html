@@ -4,19 +4,22 @@
   <td>{{ question.question_text}}</td>
   <td>{{ question.tag }}</td>
 	<td>
-  {% if perms.quickstart.change_question %}
+  {% if change or perms.quickstart.change_question %}
 	  <button type="button"
 	          class="btn btn-warning btn-sm js-update-question"
 	          data-url="{% url 'question_update' question.pk %}">
 	    <span class="glyphicon glyphicon-pencil"></span> Edit
 	  </button>
+  {% endif %}
+  {% if delete or perms.quickstart.delete_question %}
 	  <button type="button"
               class="btn btn-danger btn-sm js-delete-question"
               data-url="{% url 'question_delete' question.id %}">
         <span class="glyphicon glyphicon-trash"></span> Delete
       </button>
-	</td>
   {% endif %}
+
+  </td>
 </tr>
 {% empty %}
 <tr>

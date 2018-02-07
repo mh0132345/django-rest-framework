@@ -10,13 +10,15 @@ def question_list(request):
 
 def save_question_form(request, form, template_name):
     data = dict()
-
+    user = request.user
     if request.method == 'POST':
         if form.is_valid():
             form.save()
             question = Question.objects.all()
             data['html_question_list'] = render_to_string('../templates/includes/partial_question_list.html', {
-                'question_list': question
+                'question_list': question,
+                'change': user.has_perm('quickstart.change_question'),
+                'delete': user.has_perm('quickstart.delete_question'),
             })
             data['form_is_valid'] = True
         else:
@@ -44,12 +46,15 @@ def question_update(request, pk):
 def question_delete(request, pk):
     question = get_object_or_404(Question, pk=pk)
     data = dict()
+    user = request.user
     if request.method == 'POST':
         question.delete()
         data['form_is_valid'] = True
         question = Question.objects.all()
         data['html_question_list'] = render_to_string('../templates/includes/partial_question_list.html', {
-            'question_list': question
+            'question_list': question,
+            'change': user.has_perm('quickstart.change_question'),
+            'delete': user.has_perm('quickstart.delete_question'),
         })
     else:
         context = {'question': question}
@@ -62,13 +67,15 @@ def choice_list(request):
 
 def save_choice_form(request, form, template_name):
     data = dict()
-
+    user = request.user
     if request.method == 'POST':
         if form.is_valid():
             form.save()
             choices = Choice.objects.all()
             data['html_choice_list'] = render_to_string('../templates/includes/partial_choice_list.html', {
-                'choice_list': choices
+                'choice_list': choices,
+                'change': user.has_perm('quickstart.change_choice'),
+                'delete': user.has_perm('quickstart.delete_choice'),
             })
             data['form_is_valid'] = True
         else:
@@ -95,12 +102,15 @@ def choice_update(request, pk):
 def choice_delete(request, pk):
     choice = get_object_or_404(Choice, pk=pk)
     data = dict()
+    user = request.user
     if request.method == 'POST':
         choice.delete()
         data['form_is_valid'] = True
         choices = Choice.objects.all()
         data['html_choice_list'] = render_to_string('../templates/includes/partial_choice_list.html', {
-            'choice_list': choices
+            'choice_list': choices,
+            'change': user.has_perm('quickstart.change_choice'),
+            'delete': user.has_perm('quickstart.delete_choice')
         })
     else:
         context = {'choice': choice}

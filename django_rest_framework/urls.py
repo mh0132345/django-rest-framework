@@ -17,16 +17,16 @@ router = routers.DefaultRouter()
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
-    url(r'^', include(router.urls), name='home'),
+    url(r'^$', views.question_list, name='question_list'),
     # url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('admin/', admin.site.urls),
     url(r'^question/$', views.question_list, name='question_list'),
     url(r'^question/create/$', views.question_create, name='add_question'),
-    url(r'^question/update/(?P<pk>\d+)/$', views.question_update, name='question_update'),
+    url(r'^question/(?P<pk>\d+)/update/$', views.question_update, name='question_update'),
     url(r'^question/(?P<pk>\d+)/delete/$', views.question_delete, name='question_delete'),
     url(r'^choice/$', views.choice_list, name='choice_list'),
     url(r'^choice/create/$', views.choice_create, name='choice_create'),
-    url(r'^choice/update/(?P<pk>\d+)/$', views.choice_update, name='choice_update'),
+    url(r'^choice/(?P<pk>\d+)/update/$', views.choice_update, name='choice_update'),
     url(r'^choice/(?P<pk>\d+)/delete/$', views.choice_delete, name='choice_delete'),
     url(r'^login/$', auth_views.login, {'authentication_form': LoginForm}, name='login'),
     url(r'^logout/$', auth_views.logout, {'next_page': '/login'}, name='logout'),
